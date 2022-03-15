@@ -1,73 +1,34 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+## NestJs 프레임워크 스터디
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
+```
+1. nestjs 공식문서를 바탕으로 기본적인 컨트롤러, 서비스, 리포지토리 단위의 설계하는 방법 배우기
+2. mysql 연동 및 typeorm 사용하는 방법 배우기
+3. 미들웨어, 필터, 파이프, 가드, 인터셉터, 커스텀 데코레이터를 다루는 기본적인 방법 습득
 ```
 
-## Running the app
+### 공급자의 개념
 
-```bash
-# development
-$ npm run start
+`Service`, `Repository` 등의 클래스는 대부분 `공급자(Provider)`로 취급된다. nestjs, spring과 같은 프레임워크가 제공하는 기술중 `DI(dependency injection)`에 해당하는 말이다.
+</br>
+비슷한 예로 스프링 프레임워크에서는 controller에서 사용할 service 클래스들은 `@Service` 또는 `@Component` 어노테이션을 명시한다. 이 경우 controller 클래스에서 new 연산자를 사용하지 않고 `@Autowired` 어노테이션으로 DI를 할 수 있다.
+</br>
+nestjs에서 클래스를 공급자로 만드는 방법은 다음과 같다.
 
-# watch mode
-$ npm run start:dev
+```ts
+- cat.service.ts
+// injectable 데코레이터를 클래스선언문 위에 붙인다.
+@Injectable()
+export class CatService { ... }
 
-# production mode
-$ npm run start:prod
+- cat.module.ts
+// 공급자:providers의 의존성 배열에 추가해준다.
+// 사용하고자하는 controller에서(또는 providers에 명시되어있는 다른 공급자에서) providers에 있는 클래스들을 의존성 주입받을 수 있다.
+@Module({
+  imports: [TypeOrmModule.forFeature([Cats]), AuthModule],
+  controllers: [CatController],
+  providers: [CatService], <-- here
+  exports: [],
+})
+export class CatsModule {}
+
 ```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
