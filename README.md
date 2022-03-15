@@ -29,6 +29,15 @@ export class CatService { ... }
   providers: [CatService], <-- here
   exports: [],
 })
-export class CatsModule {}
+export class CatModule {}
+
+- cat.controller.ts
+@Controller('cats')
+export class CatController {
+  // 이렇게 생성자의 인자로 명시하고 타입만 적어주면 된다.
+  // 실제로는 맴버변수 catService 에 CatService를 인스턴스화 해서 주입하는것과 같다.
+  constructor(private catService : CatService ){
+  }
+}
 
 ```
