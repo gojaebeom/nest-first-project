@@ -6,8 +6,9 @@
 3. 미들웨어, 필터, 파이프, 가드, 인터셉터, 커스텀 데코레이터를 다루는 기본적인 방법 습득
 ```
 
-### 공급자의 개념
+### 맛보기
 
+**공급자의 개념**</br>
 `Service`, `Repository` 등의 클래스는 대부분 `공급자(Provider)`로 취급된다. nestjs, spring과 같은 프레임워크가 제공하는 기술중 `DI(dependency injection)`에 해당하는 말이다.
 </br>
 비슷한 예로 스프링 프레임워크에서는 controller에서 사용할 service 클래스들은 `@Service` 또는 `@Component` 어노테이션을 명시한다. 이 경우 controller 클래스에서 new 연산자를 사용하지 않고 `@Autowired` 어노테이션으로 DI를 할 수 있다.
@@ -41,3 +42,5 @@ export class CatController {
 }
 
 ```
+
+그밖의 내용들은 https://docs.nestjs.com/ 참고(고양이프로젝트를 통해 내용이 잘 정리되어있다.)
