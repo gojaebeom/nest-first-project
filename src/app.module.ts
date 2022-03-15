@@ -5,9 +5,16 @@ import { AppService } from './app.service';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { CatsController } from './cats/cats.controller';
 import { CatsModule } from './cats/cats.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), CatsModule],
+  imports: [
+    ConfigModule.forRoot(),
+    TypeOrmModule.forRoot(),
+    CatsModule,
+    AuthModule,
+  ],
   controllers: [AppController, CatsController],
   providers: [AppService],
 })
